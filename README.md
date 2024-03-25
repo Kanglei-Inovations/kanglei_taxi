@@ -1,7 +1,3 @@
-Certainly! Here's a template for a README.md file for the Kanglei Taxi project:
-
----
-
 # Kanglei Taxi
 
 ## Description
