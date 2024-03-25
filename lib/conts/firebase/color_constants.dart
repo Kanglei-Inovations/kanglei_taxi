@@ -15,7 +15,7 @@ class AppColors {
   static const Color indyBlue = Color(0xFF414361);
   static const Color spaceCadet = Color(0xFF2a2d43);
   static const Color primary = Color(0xFF836FFF);
-  static const Color secondary = Colors.greenAccent;
+  static const Color secondary = Color(0xFFF6B765);
   static const Color primarytransperent = Color(0xFFFEEAE6);
   static const Color textBlack = Colors.black;
   static const Color errorColor = Colors.red;
