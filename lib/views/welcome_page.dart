@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanglei_taxi/conts/firebase/all_constants.dart';
 import 'package:kanglei_taxi/conts/resposive_settings.dart';
 import 'package:kanglei_taxi/nav_bar.dart';
+import 'package:kanglei_taxi/views/signin_page.dart';
+import 'package:kanglei_taxi/views/signup_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -35,7 +38,9 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return _showWelcomePage ? _buildWelcomePage() : _buildWelcomePage();
+    final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+    return _showWelcomePage ? _buildWelcomePage() :
+    isLoggedIn?Navbar():SignInPage();
   }
 
   Widget _buildWelcomePage() {
@@ -110,7 +115,7 @@ class _WelcomePageState extends State<WelcomePage> {
             right: 20,
             child: GestureDetector(
               onTap: () {
-                Get.off(Navbar());
+                Get.off(SignupPage());
               },
               child: Container(
                 width: 60,

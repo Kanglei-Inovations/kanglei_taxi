@@ -47,6 +47,8 @@ dependencies:
   bottom_navy_bar:
   intl:
   bezier:
+  google_fonts: ^6.2.1
+  flutter_native_splash: ^2.4.0
 
 
 
@@ -55,12 +57,26 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+
+flutter_native_splash:
+  color: "#836FFF"
+  color_dark: "#2a2d43"
+  image: images/logo_splash.png
+  image_dark: images/logo_splash.png
+
+  android_12:
+    image: images/logo_splash.png
+    icon_background_color: "#836FFF"
+    image_dark: images/logo_splash.png
+    icon_background_color_dark: "#2a2d43"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
