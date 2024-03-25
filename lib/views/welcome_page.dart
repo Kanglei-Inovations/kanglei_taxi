@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanglei_taxi/conts/firebase/all_constants.dart';
@@ -48,41 +49,57 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image(
-                              image: AssetImage("images/taxi_booking_welcome.jpg"),
-                            ),
-                            Column(
-                              children: [
-                Text(
-                  'Welcome to KangleiTaxi!',
-                  style: Theme.of(context).textTheme.headline1
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image(
+                  image: AssetImage("images/taxi_booking_welcome.jpg"),
                 ),
-                Text(
-                  'Are you ready to explore Manipur like never before?',
-                    style: Theme.of(context).textTheme.subtitle1
+                Column(
+                  children: [
+                    Text('Welcome to KangleiTaxi!',
+                        style: Theme.of(context).textTheme.headline1),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Are you ready to explore Manipur like never before?',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      textAlign: TextAlign.center,
+                    ),
+
+                    Text(
+                        'Say goodbye to waiting for taxis and hello to convenient and reliable transportation with KangleiTaxi.',
+                        style: Theme.of(context).textTheme.subtitle1, textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                Text(
-                  'Say goodbye to waiting for taxis and hello to convenient and reliable transportation with KangleiTaxi.',
-                  style: Theme.of(context).textTheme.subtitle1
-                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                OutlinedButton(onPressed: () {}, child: Text("Log In")),
-                SizedBox(width: 10,),
-                OutlinedButton(onPressed: () {}, child: Text("Sign Up"))
-                              ],
-                            )
-                          ],
-                ),
-              ),
-            ));
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(),
+                                foregroundColor: AppColors.primary),
+                            child: Text("Log In"))),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(),
+                                foregroundColor: AppColors.secondary),
+                            child: Text("Sign Up")))
+                  ],
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
