@@ -1,17 +1,85 @@
+import 'dart:ui';
+
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:kanglei_taxi/views/booking_history.dart';
+import 'package:kanglei_taxi/views/home_page.dart';
+import 'package:kanglei_taxi/views/live_support.dart';
+import 'package:kanglei_taxi/views/settings_page.dart';
+
+import 'conts/firebase/color_constants.dart';
+
 
 class Navbar extends StatefulWidget {
-  const Navbar({super.key});
+  const Navbar({Key? key}) : super(key: key);
 
   @override
-  State<Navbar> createState() => _NavbarState();
+  _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
+  int _currentIndex = 0;
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  final _pages = [HomePage(), const BookingHistory(),const LiveSupport(), const SettingPage()];
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-
+    return Scaffold(
+      body: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0), // Adjust the values as needed
+          topRight: Radius.circular(20.0), // Adjust the values as needed
+        ),
+        child: IndexedStack(index: _currentIndex, children: _pages),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0), // Adjust the values as needed
+          topRight: Radius.circular(20.0), // Adjust the values as needed
+        ),
+        child: BottomNavyBar(
+          containerHeight: 60,
+          selectedIndex: _currentIndex,
+          showElevation: true,
+          itemCornerRadius: 24,
+          curve: Curves.elasticInOut,
+          onItemSelected: (index) => setState(() => _currentIndex = index),
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+              icon: Icon(Icons.local_taxi_rounded),
+              title: Text('Ride'),
+              activeColor: AppColors.primary,
+              inactiveColor: Colors.greenAccent,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.history),
+              title: Text('History'),
+              activeColor: AppColors.primary,
+              inactiveColor: Colors.greenAccent,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Badge(
+                label: Text('2'),
+                child: Icon(Icons.messenger_sharp),
+              ),
+              title: Text('Cart'),
+              activeColor: AppColors.primary,
+              inactiveColor: Colors.greenAccent,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.settings),
+              title: Text('Settings'),
+              activeColor: AppColors.primary,
+              inactiveColor: Colors.greenAccent,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -44,6 +44,9 @@ dependencies:
   loading_indicator: ^3.1.0
   get: ^4.6.5
   shared_preferences: ^2.2.2
+  bottom_navy_bar:
+  intl:
+  bezier:
 
 
 
