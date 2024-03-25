@@ -39,102 +39,50 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-    return _showWelcomePage ? _buildWelcomePage() :
-    isLoggedIn?Navbar():SignInPage();
+    return _showWelcomePage ? _buildWelcomePage() : _buildWelcomePage()
+        // isLoggedIn?Navbar():SignInPage()
+        ;
   }
 
   Widget _buildWelcomePage() {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                color: AppColors.secondary,
-                height: ResponsiveFile.screenHeight / 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Welcome',
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        'At the KangleiTaxi',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image(
+                              image: AssetImage("images/taxi_booking_welcome.jpg"),
+                            ),
+                            Column(
+                              children: [
+                Text(
+                  'Welcome to KangleiTaxi!',
+                  style: Theme.of(context).textTheme.headline1
+                ),
+                Text(
+                  'Are you ready to explore Manipur like never before?',
+                    style: Theme.of(context).textTheme.subtitle1
+                ),
+                Text(
+                  'Say goodbye to waiting for taxis and hello to convenient and reliable transportation with KangleiTaxi.',
+                  style: Theme.of(context).textTheme.subtitle1
+                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                OutlinedButton(onPressed: () {}, child: Text("Log In")),
+                SizedBox(width: 10,),
+                OutlinedButton(onPressed: () {}, child: Text("Sign Up"))
+                              ],
+                            )
+                          ],
                 ),
               ),
-              Container(
-                color: Colors.white,
-                height: ResponsiveFile.screenHeight / 3,
-                child: Center(
-                  child: Image.asset(
-                    'images/taxianimation.gif', // Change to your image path
-                    width: ResponsiveFile.screenWidth,
-                    height: ResponsiveFile.screenHeight / 3,
-                  ),
-                ),
-              ),
-              Container(
-                color: AppColors.primary,
-                height: ResponsiveFile.screenHeight / 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Center(
-                    child: Text(
-                      'We are here to make your trip memorable.',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: GestureDetector(
-              onTap: () {
-                Get.off(SignupPage());
-              },
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            ));
   }
 }

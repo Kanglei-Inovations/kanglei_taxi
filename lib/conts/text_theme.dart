@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kanglei_taxi/conts/firebase/all_constants.dart';
 
 class TTextTheme{
   static TextTheme lightTextTheme= TextTheme(
-    headline2: GoogleFonts.montserrat(color: Colors.black87),
-    subtitle2: GoogleFonts.poppins(color: Colors.deepPurpleAccent),
+    headline1: GoogleFonts.roboto(color: Colors.black87,fontSize: 26, fontWeight: FontWeight.bold ),
+    headline2: GoogleFonts.roboto(color: Colors.black87,fontSize: 22, fontWeight: FontWeight.bold),
+    headline3: GoogleFonts.roboto(color: Colors.black87,fontSize: 18, fontWeight: FontWeight.bold),
+    subtitle1: GoogleFonts.poppins(color: Colors.grey,fontSize: 15,),
+    subtitle2: GoogleFonts.poppins(color: Colors.grey,fontSize: 14,),
   );
   static TextTheme darkTextTheme= TextTheme(
-    headline2: GoogleFonts.montserrat(color: Colors.white70),
-    subtitle2: GoogleFonts.poppins(color: Colors.white60),
+    headline1: GoogleFonts.roboto(color: Colors.white70,fontSize: 26, fontWeight: FontWeight.bold ),
+    headline2: GoogleFonts.roboto(color: Colors.white70,fontSize: 22,fontWeight: FontWeight.bold ),
+    headline3: GoogleFonts.roboto(color: Colors.white70,fontSize: 18,fontWeight: FontWeight.bold ),
+    subtitle1: GoogleFonts.poppins(color: AppColors.lightGrey,fontSize: 15,),
+    subtitle2: GoogleFonts.poppins(color: AppColors.lightGrey,fontSize: 14,),
+
   );
 }
