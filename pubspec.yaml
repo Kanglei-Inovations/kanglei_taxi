@@ -45,9 +45,9 @@ dependencies:
   get: ^4.6.5
   shared_preferences: ^2.2.2
   bottom_navy_bar:
-  intl:
+  intl: ^0.19.0
   bezier:
-  google_fonts: ^6.2.1
+  google_fonts:
   flutter_native_splash: ^2.4.0
   image_picker:
   wave:
@@ -57,6 +57,22 @@ dependencies:
   provider:
   url_launcher:
   external_app_launcher: ^4.0.0
+  open_settings:
+  location:
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
+  flutter_map: ^6.1.0
+  shimmer:
+  flutter_polyline_points:
+  permission_handler:
+  connectivity:
+  pdf:
+  path_provider:
+  syncfusion_flutter_pdf: 25.1.35
+  open_file: ^3.0.2
+  flutter_pdfview: ^1.0.0
+  cached_network_image:
+  pinch_zoom: ^2.0.0
 
 
 
