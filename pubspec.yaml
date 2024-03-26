@@ -49,6 +49,12 @@ dependencies:
   bezier:
   google_fonts: ^6.2.1
   flutter_native_splash: ^2.4.0
+  image_picker:
+  wave:
+  fluttertoast:
+  mobile_number:
+  provider:
+  url_launcher:
 
 
 
