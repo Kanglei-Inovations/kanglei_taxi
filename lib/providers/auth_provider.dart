@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kanglei_taxi/widget/ki_info_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../conts/firebase/firestore_constants.dart';
@@ -48,7 +50,11 @@ class AuthProviderlocal extends ChangeNotifier {
     var isLoggedIn = false;
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
-        print('User is currently signed out!');
+        KIinfoBar(
+          title: "Checking Session",
+          message: "User is currently signed out!",
+          bgcolor: Colors.grey,
+        ).showInfo();
         isLoggedIn = false;
       } else {
         isLoggedIn = true;
@@ -63,7 +69,6 @@ class AuthProviderlocal extends ChangeNotifier {
   }
 
   Future<bool> signInUsingEmailPassword({required String email,required String password,}) async {
-
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -76,7 +81,6 @@ class AuthProviderlocal extends ChangeNotifier {
       );
 
       user = userCredential.user;
-      print(user.toString());
       if (user != null) {
         await prefs.setString(FirestoreConstants.id, user.uid);
         await prefs.setString(
@@ -86,40 +90,59 @@ class AuthProviderlocal extends ChangeNotifier {
         await prefs.setString(
             FirestoreConstants.phoneNumber, user.phoneNumber ?? "");
         _status = Status.authenticated;
+        KIinfoBar(
+          title: "Success",
+          message: "You have authenticated successfully",
+          bgcolor: Colors.greenAccent,
+        ).showInfo(); // Show success snackbar
         notifyListeners();
         return true;
-
-      }
-      else{
-        print("NO USER FOUND");
+      } else {
+        // Show error snackbar for unknown reason
+        KIinfoBar(
+          title: "Error",
+          message: "Unknown error occurred during authentication",
+          bgcolor: Colors.red,
+        ).showInfo();
         _status = Status.authenticateError;
         notifyListeners();
         return false;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Get.snackbar('Account does"t exist', 'Please Register first',
-            backgroundColor: Colors.orangeAccent);
-        if (kDebugMode) {
-          print(e.code);
-        }
+        KIinfoBar(
+          title: "Account does not exist",
+          message: "Please register first",
+          bgcolor: Colors.orangeAccent,
+        ).showInfo();
       } else if (e.code == 'wrong-password') {
-        if (kDebugMode) {
-          Get.snackbar(
-              'Login unsuccessful!', 'Please check username and password',
-              backgroundColor: Colors.orangeAccent);
-          print(e.code);
-        }
-
-        _status = Status.authenticateError;
-        notifyListeners();
-        return false;
-
+        KIinfoBar(
+          title: "Incorrect Password",
+          message: "Please check your password",
+          bgcolor: Colors.red,
+        ).showInfo(); // Show error snackbar for wrong password
+      } else {
+        // Show generic error snackbar for other Firebase errors
+        KIinfoBar(
+          title: "Firebase Error",
+          message: e.message ?? "An error occurred during authentication",
+          bgcolor: Colors.red,
+        ).showInfo();
       }
+      _status = Status.authenticateError;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      // Show generic error snackbar for other errors
+      KIinfoBar(
+        title: "Error",
+        message: e.toString(),
+        bgcolor: Colors.red,
+      ).showInfo();
+      _status = Status.authenticateError;
+      notifyListeners();
+      return false;
     }
-    _status = Status.authenticateChecking;
-    notifyListeners();
-    return false;
   }
 
   Future<bool> registerUsingEmailPassword({
@@ -179,8 +202,12 @@ class AuthProviderlocal extends ChangeNotifier {
             FirestoreConstants.photoUrl, photoURL ?? "");
         await prefs.setString(
             FirestoreConstants.phoneNumber, phoneNumber ?? "");
-        Fluttertoast.showToast(
-            msg: "Succefully Register", backgroundColor: Colors.green);
+        KIinfoBar(
+          title: "SUCCESS",
+          message: "Succefully Register",
+          bgcolor: Colors.green,
+        ).showInfo();
+
         _status = Status.authenticated;
         notifyListeners();
         return true;
@@ -192,12 +219,19 @@ class AuthProviderlocal extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
-        Fluttertoast.showToast(
-            msg: "The password provided is too weak.", backgroundColor: Colors.red);
+        KIinfoBar(
+          title: "FAIL",
+          message: "The password provided is too weak.",
+          bgcolor: Colors.red,
+        ).showInfo();
+
       } else if (e.code == 'email-already-in-use') {
-        Fluttertoast.showToast(
-            msg: "The account already exists for that email.", backgroundColor: Colors.red);
-        print('The account already exists for that email.');
+        KIinfoBar(
+          title: "FAIL",
+          message: "The account already exists for that email.",
+          bgcolor: Colors.red,
+        ).showInfo();
+
       }
       lastAuthenticationError = e.code;
       print('Firebase authentication error: ${e.message}');
@@ -283,10 +317,27 @@ class AuthProviderlocal extends ChangeNotifier {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.sendPasswordResetEmail(email: email);
-      Get.snackbar('Reset','Password Link Send on Email check it!',backgroundColor: Colors.deepPurpleAccent);
+      KIinfoBar(
+        title: "RESET",
+        message: "Password Link Send on Email check it! ${email}",
+        bgcolor: Colors.greenAccent,
+      ).showInfo();
+      var openAppResult = await LaunchApp.openApp(
+        androidPackageName: 'com.google.android.gm',
+        iosUrlScheme: 'gm://',
+        appStoreLink:
+        'https://play.google.com/store/apps/details?id=com.google.android.gm&hl=en&gl=US&pli=1',
+        // openStore: false
+      );
+
+
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('Fail!', ' ${e.code}',backgroundColor: Colors.deepPurpleAccent);
-      Get.snackbar('Fail!', '${e.message}',backgroundColor: Colors.deepPurpleAccent);
+      KIinfoBar(
+        title: "${e.code}",
+        message: "${e.message}",
+        bgcolor: Colors.orangeAccent,
+      ).showInfo();
+
     }
   }
 
@@ -299,10 +350,20 @@ class AuthProviderlocal extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
-          Get.snackbar('Fail!', "Anonymous auth hasn't been enabled for this project.", backgroundColor: Colors.greenAccent);
+          KIinfoBar(
+            title: "Fail!",
+            message: "Anonymous auth hasn't been enabled for this project.",
+            bgcolor: Colors.red,
+          ).showInfo();
+
           break;
         default:
-          Get.snackbar('Fail!', "Unknown error.", backgroundColor: Colors.greenAccent);
+          KIinfoBar(
+            title: "Fail!",
+            message: "Unknown error.",
+            bgcolor: Colors.red,
+          ).showInfo();
+
       }
     }
     return user;

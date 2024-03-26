@@ -40,8 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-    return _showWelcomePage ? _buildWelcomePage() : _buildWelcomePage()
-        // isLoggedIn?Navbar():SignInPage()
+    return _showWelcomePage ? _buildWelcomePage() : isLoggedIn?Navbar():SignInPage()
         ;
   }
 
