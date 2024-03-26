@@ -82,7 +82,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                       child: OutlinedButton(
                         onPressed: () {
-                          Get.to(SignInPage());
+                          Get.to(SignupPage());
                         },
                         style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -110,7 +110,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
                       ),
                       child: OutlinedButton(
-                        onPressed: () { Get.to(SignupPage());},
+                        onPressed: () { Get.to(SignInPage());},
                         style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
