@@ -225,12 +225,12 @@ class _HomePageState extends State<HomePage> {
               },
               child: FlutterMap(
 options: MapOptions(
-  center: _currentlocation != null ? _currentlocation: LatLng(24.8090634, 93.9436556),
-  zoom: _zoom,
+  center: LatLng(37.7749, -122.4194), // San Francisco coordinates
+  zoom: 13.0,
 
 ),
 children: [
-
+  
 ],
               )
               // FlutterMap(
