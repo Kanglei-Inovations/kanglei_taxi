@@ -52,51 +52,88 @@ class _WelcomePageState extends State<WelcomePage> {
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height: ResponsiveFile.screenHeight/6,),
                 Image(
-                  image: AssetImage("images/taxi_booking_welcome.jpg"),
+                  image: AssetImage("images/welcome.png"),
                 ),
+                SizedBox(height: ResponsiveFile.screenHeight/6,),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Welcome to KangleiTaxi!',
+                    Text('KangleiTaxi',
                         style: Theme.of(context).textTheme.headline1),
                     SizedBox(
                       height: 10,
                     ),
                     Text('Are you ready to explore Manipur like never before?',
-                        style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1,
                       textAlign: TextAlign.center,
                     ),
-
-                    Text(
-                        'Say goodbye to waiting for taxis and hello to convenient and reliable transportation with KangleiTaxi.',
-                        style: Theme.of(context).textTheme.subtitle1, textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                        child: OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(),
-                                foregroundColor: AppColors.primary),
-                            child: Text("Log In"))),
                     SizedBox(
-                      width: 10,
+                      height: 10,
                     ),
-                    Expanded(
-                        child: OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(),
-                                foregroundColor: AppColors.secondary),
-                            child: Text("Sign Up")))
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary, // Set the background color for the first button
+                        borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                      ),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Get.to(SignInPage());
+                        },
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                          ),
+                          side: BorderSide.none, // Remove the border
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Text(
+                            "GET STARTED",
+                            style: TextStyle(
+                              color: Colors.white, // Set text color to white
+                              fontSize: 16, // Adjust the font size as needed
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15), // Add some space between the buttons
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.orangeWeb, // Set the background color for the first button
+                        borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                      ),
+                      child: OutlinedButton(
+                        onPressed: () { Get.to(SignupPage());},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                          ),
+                          side: BorderSide.none,
+                          // Use primary color from the theme
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Text(
+                            "I ALREADY HAVE AN ACCOUNT",
+                            style: TextStyle(
+                              color: AppColors.white, // Use primary color for the text
+                              fontSize: 16, // Adjust the font size as needed
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 )
+
+
               ],
             ),
           ),

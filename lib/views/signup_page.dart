@@ -11,7 +11,8 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Theme.of(context).backgroundColor,
+      
 
     );
   }
