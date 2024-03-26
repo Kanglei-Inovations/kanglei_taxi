@@ -369,10 +369,10 @@ class _SignupPageState extends State<SignupPage> {
                                 forwardAnimationCurve: Curves.easeOut, // Animation curve for showing the snackbar (optional)
                                 reverseAnimationCurve: Curves.easeIn, // Animation curve for dismissing the snackbar (optional)
                               );
-                              Get.to(SignInPage());
+                              Get.offAll(SignInPage());
                               await authProvider.sendPasswordResetEmail(email: emailController.text);
-                              const String uri = 'gmail://';
-                              if (await canLaunchUrl(uri as Uri)) {
+                              const String uri = 'mailto:';
+                              if (await canLaunch(uri)) { // Use canLaunch directly with the String URI
                                 await launch(uri);
                               } else {
                                 throw 'Could not launch $uri';
