@@ -8,6 +8,7 @@ import 'package:kanglei_taxi/conts/text_class.dart';
 import 'package:kanglei_taxi/nav_bar.dart';
 import 'package:kanglei_taxi/services/validation.dart';
 import 'package:kanglei_taxi/views/signup_page.dart';
+import 'package:kanglei_taxi/widget/ki_info_bar.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 
@@ -200,37 +201,8 @@ class SignInPageState extends State<SignInPage> {
                       InkWell(
                           onTap: () async {
 
-                              //await authProvider.sendPasswordResetEmail(email: _emailTextController.text);
-                            var openAppResult = await LaunchApp.openApp(
-                              androidPackageName: 'com.google.android.gm',
-                              iosUrlScheme: 'gm://',
-                              appStoreLink:
-                              'https://play.google.com/store/apps/details?id=com.google.android.gm&hl=en&gl=US&pli=1',
-                              // openStore: false
-                            );
+                             await authProvider.sendPasswordResetEmail(email: _emailTextController.text);
 
-
-                              Get.snackbar(
-                                "Password Reset", // Snackbar title
-                                "Link has send to your Email ${_emailTextController
-                                    .text}", // Snackbar message
-                                duration: Duration(seconds: 3),
-                                // Duration for which snackbar will be visible (optional)
-                                backgroundColor: Colors.grey,
-                                // Background color of the snackbar (optional)
-                                snackPosition: SnackPosition.BOTTOM,
-                                // Position of the snackbar (optional)
-                                borderRadius: 10,
-                                // Border radius of the snackbar (optional)
-                                margin: EdgeInsets.all(10),
-                                // Margin around the snackbar (optional)
-                                isDismissible: true,
-                                // Whether the snackbar can be dismissed by tapping outside (optional)
-                                forwardAnimationCurve: Curves.easeOut,
-                                // Animation curve for showing the snackbar (optional)
-                                reverseAnimationCurve: Curves
-                                    .easeIn, // Animation curve for dismissing the snackbar (optional)
-                              );
 
                           },
                           child: Container(
@@ -252,6 +224,7 @@ class SignInPageState extends State<SignInPage> {
                             setState(() {
                               _isProcessing = true;
                             });
+
                             bool isSuccess =
                                 await authProvider.signInUsingEmailPassword(
                               email: _emailTextController.text,

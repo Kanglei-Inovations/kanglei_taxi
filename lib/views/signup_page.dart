@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:kanglei_taxi/conts/resposive_settings.dart';
 import 'package:kanglei_taxi/providers/auth_provider.dart';
 import 'package:kanglei_taxi/services/validation.dart';
 import 'package:kanglei_taxi/views/signin_page.dart';
+import 'package:kanglei_taxi/widget/ki_info_bar.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -395,27 +397,14 @@ class _SignupPageState extends State<SignupPage> {
                               });
                               Get.offAll(Navbar());
                             } else  if (authProvider.lastAuthenticationError == 'email-already-in-use') {
-                              Get.snackbar(
-                                "Failed", // Snackbar title
-                                "Email Already in use", // Snackbar message
-                                duration: Duration(seconds: 3), // Duration for which snackbar will be visible (optional)
-                                backgroundColor: Colors.grey, // Background color of the snackbar (optional)
-                                snackPosition: SnackPosition.BOTTOM, // Position of the snackbar (optional)
-                                borderRadius: 10, // Border radius of the snackbar (optional)
-                                margin: EdgeInsets.all(10), // Margin around the snackbar (optional)
-                                isDismissible: true, // Whether the snackbar can be dismissed by tapping outside (optional)
-
-                                forwardAnimationCurve: Curves.easeOut, // Animation curve for showing the snackbar (optional)
-                                reverseAnimationCurve: Curves.easeIn, // Animation curve for dismissing the snackbar (optional)
-                              );
+                              KIinfoBar(
+                                title: "FAIL",
+                                message: "Email Already in use",
+                                bgcolor: Colors.green,
+                              ).showInfo();
                               Get.offAll(SignInPage());
                               await authProvider.sendPasswordResetEmail(email: emailController.text);
-                              const String uri = 'mailto:';
-                              if (await canLaunch(uri)) { // Use canLaunch directly with the String URI
-                                await launch(uri);
-                              } else {
-                                throw 'Could not launch $uri';
-                              }
+
                             }
 
 
