@@ -44,6 +44,9 @@ class _SignupPageState extends State<SignupPage> {
   String photoUrl = '';
   bool _isProcessing = false;
   late final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  String _mobileNumber = '';
+
+
   Future getImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -62,7 +65,6 @@ class _SignupPageState extends State<SignupPage> {
       }
     });
   }
-
   Future uploadFile() async {
     setState(() {
       isLoading = true; // Set isLoading to true to show the shimmer effect
@@ -84,21 +86,6 @@ class _SignupPageState extends State<SignupPage> {
       });
     }
   }
-  String _mobileNumber = '';
-  List<SimCard> _simCard = <SimCard>[];
-
-  @override
-  void initState() {
-    super.initState();
-    _getContacts();
-    MobileNumber.listenPhonePermission((isPermissionGranted) {
-      if (isPermissionGranted) {
-        initMobileNumberState();
-      } else {}
-    });
-
-    initMobileNumberState();
-  }
   Future<void> initMobileNumberState() async {
     if (!await MobileNumber.hasPhonePermission) {
       await MobileNumber.requestPhonePermission;
@@ -108,30 +95,31 @@ class _SignupPageState extends State<SignupPage> {
     try {
       _mobileNumber = (await MobileNumber.mobileNumber)!;
       _mobileNumber = _mobileNumber.substring(max(0, _mobileNumber.length - 10));
-
+      setState(() {
+        phoneNumberController.text = _mobileNumber;
+        print(_mobileNumber.toString());
+      });
     } on PlatformException catch (e) {
       debugPrint("Failed to get mobile number because of '${e.message}'");
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
-    setState(() {
-      phoneNumberController.text = _mobileNumber;
-      print(_mobileNumber.toString());
 
-    });
   }
-  List<Contact> _contacts = [];
 
-  Future<void> _getContacts() async {
-    Iterable<Contact> contacts = await ContactsService.getContacts();
-    print('${contacts}');
-    setState(() {
-      _contacts = contacts.toList();
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        initMobileNumberState();
+      } else {}
     });
+    initMobileNumberState();
   }
+
   @override
   Widget build(BuildContext context) {
 
