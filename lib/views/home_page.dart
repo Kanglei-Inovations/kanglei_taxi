@@ -224,81 +224,91 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               child: FlutterMap(
-                options: MapOptions(
-                  center: _currentlocation != null
-                      ? _currentlocation
-                      : LatLng(24.8090634, 93.9436556),
-                  zoom: _zoom,
-                  // bearing: bearing,
-                  onTap: (latLng) async {
-                    // Update the destination location when long-pressed on the map
-                    setState(() {
-                      _destinationlocation = latLng;
-                    });
-                    String address = await LocationProvider()
-                        .getAddressFromLatLon(
-                        latLng.latitude, latLng.longitude);
-                    print("Address: $address");
-                    if (address.isNotEmpty) {
-                      setState(() {
-                        // _zoom = _zoom +5;
-                        _getRoute();
-                        distinationaddressController.text = address;
-                      });
-                    }
-                  }, // Initial zoom level
-                ),
-                layers: [
-                  TileLayerOptions(
-                    urlTemplate:
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    subdomains: [
-                      'a',
-                      'b',
-                      'c'
-                    ], // Subdomains for the tile server
-                  ),
-                  MarkerLayerOptions(
-                    markers: [
-                      Marker(
-                        width: 80.0,
-                        height: 80.0,
-                        point: _currentlocation,
-                        builder: (ctx) => Container(
-                          child: Icon(
-                            Icons.location_pin,
-                            color: Colors.black,
-                            size: 30.0,
-                          ),
-                        ),
-                      ),
-                      Marker(
-                        width: 80.0,
-                        height: 80.0,
-                        point:
-                        _destinationlocation, // Use _destination for the destination point
-                        builder: (ctx) => Icon(
-                          Icons.business,
-                          color: Colors.black,
-                          size: 30.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  PolylineLayerOptions(
-                    polylines: [
-                      if (_routeCoordinates
-                          .isNotEmpty) // Check if _routeCoordinates is not empty
-                        Polyline(
-                          points:
-                          _routeCoordinates, // Pass _routeCoordinates directly
-                          color: Colors.blue,
-                          strokeWidth: 4.0,
-                        ),
-                    ],
-                  ),
-                ],
-              ),
+options: MapOptions(
+  center: _currentlocation != null ? _currentlocation: LatLng(24.8090634, 93.9436556),
+  zoom: _zoom,
+
+),
+children: [
+
+],
+              )
+              // FlutterMap(
+              //   options: MapOptions(
+              //     center: _currentlocation != null
+              //         ? _currentlocation
+              //         : LatLng(24.8090634, 93.9436556),
+              //     zoom: _zoom,
+              //     // bearing: bearing,
+              //     onTap: (latLng) async {
+              //       // Update the destination location when long-pressed on the map
+              //       setState(() {
+              //         _destinationlocation = latLng;
+              //       });
+              //       String address = await LocationProvider()
+              //           .getAddressFromLatLon(
+              //           latLng.latitude, latLng.longitude);
+              //       print("Address: $address");
+              //       if (address.isNotEmpty) {
+              //         setState(() {
+              //           // _zoom = _zoom +5;
+              //           _getRoute();
+              //           distinationaddressController.text = address;
+              //         });
+              //       }
+              //     }, // Initial zoom level
+              //   ),
+              //   layers: [
+              //     TileLayerOptions(
+              //       urlTemplate:
+              //       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              //       subdomains: [
+              //         'a',
+              //         'b',
+              //         'c'
+              //       ], // Subdomains for the tile server
+              //     ),
+              //     MarkerLayerOptions(
+              //       markers: [
+              //         Marker(
+              //           width: 80.0,
+              //           height: 80.0,
+              //           point: _currentlocation,
+              //           builder: (ctx) => Container(
+              //             child: Icon(
+              //               Icons.location_pin,
+              //               color: Colors.black,
+              //               size: 30.0,
+              //             ),
+              //           ),
+              //         ),
+              //         Marker(
+              //           width: 80.0,
+              //           height: 80.0,
+              //           point:
+              //           _destinationlocation, // Use _destination for the destination point
+              //           builder: (ctx) => Icon(
+              //             Icons.business,
+              //             color: Colors.black,
+              //             size: 30.0,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     PolylineLayerOptions(
+              //       polylines: [
+              //         if (_routeCoordinates
+              //             .isNotEmpty) // Check if _routeCoordinates is not empty
+              //           Polyline(
+              //             points:
+              //             _routeCoordinates, // Pass _routeCoordinates directly
+              //             color: Colors.blue,
+              //             strokeWidth: 4.0,
+              //           ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
             ),
           ),
           Positioned(
@@ -306,7 +316,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 30,
+                  top: 45,
                   child: Center(
                     child: Container(
                       alignment: Alignment.center,
