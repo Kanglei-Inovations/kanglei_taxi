@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +13,7 @@ import 'package:kanglei_taxi/conts/resposive_settings.dart';
 import 'package:kanglei_taxi/providers/auth_provider.dart';
 import 'package:kanglei_taxi/services/validation.dart';
 import 'package:kanglei_taxi/views/signin_page.dart';
+import 'package:mobile_number/mobile_number.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +84,54 @@ class _SignupPageState extends State<SignupPage> {
       });
     }
   }
+  String _mobileNumber = '';
+  List<SimCard> _simCard = <SimCard>[];
 
+  @override
+  void initState() {
+    super.initState();
+    _getContacts();
+    MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        initMobileNumberState();
+      } else {}
+    });
+
+    initMobileNumberState();
+  }
+  Future<void> initMobileNumberState() async {
+    if (!await MobileNumber.hasPhonePermission) {
+      await MobileNumber.requestPhonePermission;
+      return;
+    }
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      _mobileNumber = (await MobileNumber.mobileNumber)!;
+      _mobileNumber = _mobileNumber.substring(max(0, _mobileNumber.length - 10));
+
+    } on PlatformException catch (e) {
+      debugPrint("Failed to get mobile number because of '${e.message}'");
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      phoneNumberController.text = _mobileNumber;
+      print(_mobileNumber.toString());
+
+    });
+  }
+  List<Contact> _contacts = [];
+
+  Future<void> _getContacts() async {
+    Iterable<Contact> contacts = await ContactsService.getContacts();
+    print('${contacts}');
+    setState(() {
+      _contacts = contacts.toList();
+    });
+  }
   @override
   Widget build(BuildContext context) {
 

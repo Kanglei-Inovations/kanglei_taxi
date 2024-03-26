@@ -53,6 +53,7 @@ dependencies:
   wave:
   fluttertoast:
   mobile_number:
+  contacts_service:
   provider:
   url_launcher:
 
