@@ -128,7 +128,7 @@ class _TaxiListState extends State<TaxiList> {
                             ),
                           ),
                         ),
-                        title: Text(carName),
+                        title: Text(carName, style: Theme.of(context).textTheme.subtitle1,),
                         subtitle: Column(
                           children: [
                             Row(
@@ -137,13 +137,14 @@ class _TaxiListState extends State<TaxiList> {
                                 Text(
                                   "${location.length > 15 ? location.substring(0, 15) + '...' : location}",
                                   overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.subtitle2,
                                 ),
                               ],
                             ),
                             Row(
                               children: [
                                 Icon(Icons.call,size:18, color: AppColors.primary,),
-                                Text(driverNo, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize:15),),
+                                Text(driverNo, style:Theme.of(context).textTheme.subtitle2,),
                               ],
                             ),
 
@@ -151,7 +152,7 @@ class _TaxiListState extends State<TaxiList> {
                         ),
                         trailing: SizedBox(
                           // Added SizedBox to limit button width
-                          width: MediaQuery.of(context).size.width / 6,
+                          width: MediaQuery.of(context).size.width / 5,
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () async  {
@@ -189,18 +190,12 @@ class _TaxiListState extends State<TaxiList> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "BOOK",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color: Colors.white),
-                                ),
-
-                              ],
+                            child: Text(
+                              "BOOK",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: Colors.white),
                             ),
                           ),
                         ),
