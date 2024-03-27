@@ -73,7 +73,7 @@ class _BookingHistoryState extends State<BookingHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Theme.of(context).backgroundColor,
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('bookings')
             .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
@@ -144,7 +144,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                   FirebaseFirestore.instance.collection('bookings').doc(docId).delete();
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                   child: Card(
                     elevation: 4,
                     child: Container(
@@ -158,7 +158,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                             child: Text(
                               'Booking Date :' +
                                   date,
-                              style: Theme.of(context).textTheme.subtitle2,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                           Divider(
@@ -207,7 +207,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Payment Status',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(top: 3.0),
@@ -227,7 +227,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Fare Amount',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(top: 3.0),
@@ -247,7 +247,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Car Type',
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                         margin: EdgeInsets.only(top: 3.0),

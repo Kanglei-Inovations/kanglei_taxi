@@ -98,6 +98,7 @@ Widget LoadingWithoutProgress(String msg) {
 Widget ZoomPhoto(String url) {
   return Builder(builder: (context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -173,13 +174,12 @@ Widget chatImage({
               child: Container(
                 padding: EdgeInsets.all(ResponsiveFile.height10 / 6),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     borderRadius:
                     BorderRadius.circular(ResponsiveFile.height10 / 2)),
-                child: AppText(
-                  text: dateText,
-                  size: ResponsiveFile.height10 / 1.2,
-                ),
+                child: Text(dateText,
+    style: Theme.of(context).textTheme.bodySmall
+    )
               ))
         ],
       ),

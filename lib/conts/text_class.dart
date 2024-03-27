@@ -58,6 +58,7 @@ class AppText extends StatelessWidget {
               },
               child: Text(
                 text,
+
                 style: TextStyle(
                   fontSize: size,
                   fontWeight: fontWeight,

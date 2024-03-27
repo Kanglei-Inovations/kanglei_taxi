@@ -92,6 +92,7 @@ class _SettingPageState extends State<SettingPage> {
     final displayName = user?.displayName ?? "No Username";
     photoUrl = user?.photoURL ?? null;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

@@ -55,6 +55,7 @@ class _MessagePreviewState extends State<MessagePreview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Color(0xFF836FFF),
         leading: Builder(
