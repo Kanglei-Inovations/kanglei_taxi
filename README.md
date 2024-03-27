@@ -15,7 +15,7 @@ Kanglei Taxi is a taxi booking application designed to facilitate convenient tra
 
 ## Installation
 To use Kanglei Taxi, follow these steps:
-1. Clone the repository: `git clone https://github.com/yourusername/kanglei-taxi.git`
+1. Clone the repository: `git clone https://github.com/Kanglei-Inovations/kanglei_taxi.git`
 2. Install dependencies: `npm install`
 3. Start the application: `npm start`
 

@@ -1,14 +1,19 @@
+
+import 'dart:convert';
+
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:kanglei_taxi/conts/firebase/color_constants.dart';
-
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 class BookingHistory extends StatefulWidget {
   const BookingHistory({Key? key}) : super(key: key);
 
@@ -17,7 +22,7 @@ class BookingHistory extends StatefulWidget {
 }
 
 class _BookingHistoryState extends State<BookingHistory> {
-  Future<void> _downloadTicket(String type, String pickupLocation, String destinationLocation, String distance, String date, String fees) async {
+    Future<void> _downloadTicket(String type, String pickupLocation, String destinationLocation, String distance, String date, String fees) async {
     // Create a new PDF document
     final PdfDocument document = PdfDocument();
 
@@ -58,10 +63,17 @@ class _BookingHistoryState extends State<BookingHistory> {
 
   }
 
+
+  Future<void> initiateTransaction({required String amt, required String msg}) async {
+    // nEedYM11981434076473
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Theme.of(context).backgroundColor,
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('bookings')
             .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
@@ -90,6 +102,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               DateTime dateTime = (booking['date'] as Timestamp).toDate();
               String date = DateFormat('dd/MM/yyyy hh:mm a').format(dateTime);
               String status= booking['status'];
+              String userId = booking['userId'];
               return Dismissible(
                 key: UniqueKey(), // Unique key for each Dismissible widget
                 direction: DismissDirection.endToStart,
@@ -131,7 +144,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                   FirebaseFirestore.instance.collection('bookings').doc(docId).delete();
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                   child: Card(
                     elevation: 4,
                     child: Container(
@@ -145,10 +158,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                             child: Text(
                               'Booking Date :' +
                                   date,
-                              style: TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.black,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                           Divider(
@@ -162,6 +172,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                               Expanded(
                                 child: Text(
                                   ' $pickupLocation',
+
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -196,19 +207,13 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Payment Status',
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Colors.black54,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(top: 3.0),
                                       child: Text(
                                         status,
-                                        style: TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.black87,
-                                        ),
+                                        style: Theme.of(context).textTheme.subtitle1,
                                       ),
                                     ),
                                   ],
@@ -222,19 +227,13 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Fare Amount',
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Colors.black54,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(top: 3.0),
                                       child: Text(
                                         '₹ ' + fees.toString(),
-                                        style: TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.black87,
-                                        ),
+                                        style: Theme.of(context).textTheme.subtitle1,
                                       ),
                                     ),
                                   ],
@@ -248,14 +247,12 @@ class _BookingHistoryState extends State<BookingHistory> {
                                   children: <Widget>[
                                     Text(
                                       'Car Type',
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Colors.black54,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                     Container(
                                         margin: EdgeInsets.only(top: 3.0),
-                                        child: Text(type
+                                        child: Text(type,
+                                          style: Theme.of(context).textTheme.subtitle1,
                                         )
                                     ),
                                   ],
@@ -269,24 +266,46 @@ class _BookingHistoryState extends State<BookingHistory> {
                             height: 10.0,
                             color: Colors.amber.shade500,
                           ),
-                          Center(
-                            child: ElevatedButton.icon(
-                              label: Text(
-                                "Print Invoice",
-                                style: TextStyle(color: Colors.white,fontSize: 14),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Center(
+                                child: ElevatedButton.icon(
+                                  label: Text(
+                                    "Print Invoice",
+                                    style: TextStyle(color: Colors.white,fontSize: 14),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.print,
+                                    size: 18.0,
+                                    color: Colors.white, // Set icon color to white
+                                  ),
+                                  onPressed: () {
+                                    _downloadTicket(type, pickupLocation, destinationLocation, distance, date, fees);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primary, // Set the background color to red
+                                  ),
+                                ),
                               ),
-                              icon: const Icon(
-                                Icons.print,
-                                size: 18.0,
-                                color: Colors.white, // Set icon color to white
+                              Center(
+                                child: ElevatedButton.icon(
+                                  label: Text('Pay Now'),
+                                  icon: const Icon(
+                                    Icons.print,
+                                    size: 18.0,
+                                    color: Colors.white, // Set icon color to white
+                                  ),
+                                  onPressed: () {
+
+                                    initiateTransaction(amt: fees, msg: userId);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primary, // Set the background color to red
+                                  ),
+                                ),
                               ),
-                              onPressed: () {
-                                _downloadTicket(type, pickupLocation, destinationLocation, distance, date, fees);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary, // Set the background color to red
-                              ),
-                            ),
+                            ],
                           ),
 
 
