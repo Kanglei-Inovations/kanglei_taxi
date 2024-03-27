@@ -7,13 +7,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:kanglei_taxi/conts/firebase/color_constants.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 class BookingHistory extends StatefulWidget {
   const BookingHistory({Key? key}) : super(key: key);
 

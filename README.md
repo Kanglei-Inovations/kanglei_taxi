@@ -38,7 +38,7 @@ We welcome contributions from the community to enhance the Kanglei Taxi platform
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-For any inquiries or support, please contact us at [contact@kangleitaxi.com](mailto:contact@kangleitaxi.com).
+For any inquiries or support, please contact us at [Kangleiinovations@gmail.com](mailto:Kangleiinovations@gmail.com).
 
 ---
 
