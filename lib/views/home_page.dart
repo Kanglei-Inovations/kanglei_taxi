@@ -177,6 +177,7 @@ class _HomePageState extends State<HomePage> {
     var w = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: kIsWeb
           ? AppBar(
               backgroundColor: Color(0xFF836FFF),
