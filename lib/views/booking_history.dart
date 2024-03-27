@@ -302,6 +302,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                     color: Colors.white, // Set icon color to white
                                   ),
                                   onPressed: () {
+                                    print(paymentLink);
                                     initiateTransaction( paymentLink: paymentLink);
                                   },
                                   style: ElevatedButton.styleFrom(
