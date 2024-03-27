@@ -281,89 +281,89 @@ class SignInPageState extends State<SignInPage> {
                                 ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        child: Row(
-                          children: const <Widget>[
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
-                              ),
-                            ),
-                            Text('or'),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          bool isSuccess =
-                              await authProvider.registerUsinggoogle();
-
-                          if (isSuccess) {
-                            Get.offAll(Navbar());
-                          }
-                        },
-                        child: Container(
-                          height: 40,
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(5),
-                                        topLeft: Radius.circular(5)),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                      "images/Google__G__logo.svg.png"),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 5,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF836FFF),
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(5),
-                                        topRight: Radius.circular(5)),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text('Log in with Google',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   margin: EdgeInsets.symmetric(vertical: 20),
+                      //   child: Row(
+                      //     children: const <Widget>[
+                      //       SizedBox(
+                      //         width: 20,
+                      //       ),
+                      //       Expanded(
+                      //         child: Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10),
+                      //           child: Divider(
+                      //             thickness: 1,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Text('or'),
+                      //       Expanded(
+                      //         child: Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 10),
+                      //           child: Divider(
+                      //             thickness: 1,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       SizedBox(
+                      //         width: 20,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // InkWell(
+                      //   onTap: () async {
+                      //     bool isSuccess =
+                      //         await authProvider.registerUsinggoogle();
+                      //
+                      //     if (isSuccess) {
+                      //       Get.offAll(Navbar());
+                      //     }
+                      //   },
+                      //   child: Container(
+                      //     height: 40,
+                      //     margin:
+                      //         EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.all(Radius.circular(20)),
+                      //     ),
+                      //     child: Row(
+                      //       children: <Widget>[
+                      //         Expanded(
+                      //           flex: 1,
+                      //           child: Container(
+                      //             decoration: const BoxDecoration(
+                      //               color: Colors.white,
+                      //               borderRadius: BorderRadius.only(
+                      //                   bottomLeft: Radius.circular(5),
+                      //                   topLeft: Radius.circular(5)),
+                      //             ),
+                      //             alignment: Alignment.center,
+                      //             child: Image.asset(
+                      //                 "images/Google__G__logo.svg.png"),
+                      //           ),
+                      //         ),
+                      //         Expanded(
+                      //           flex: 5,
+                      //           child: Container(
+                      //             decoration: BoxDecoration(
+                      //               color: Color(0xFF836FFF),
+                      //               borderRadius: BorderRadius.only(
+                      //                   bottomRight: Radius.circular(5),
+                      //                   topRight: Radius.circular(5)),
+                      //             ),
+                      //             alignment: Alignment.center,
+                      //             child: Text('Log in with Google',
+                      //                 style: TextStyle(
+                      //                     color: Colors.white,
+                      //                     fontSize: 18,
+                      //                     fontWeight: FontWeight.w400)),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       InkWell(
                         onTap: () {
                           Get.to(SignupPage());
