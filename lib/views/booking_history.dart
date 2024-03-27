@@ -13,6 +13,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 class BookingHistory extends StatefulWidget {
   const BookingHistory({Key? key}) : super(key: key);
 
@@ -63,8 +64,12 @@ class _BookingHistoryState extends State<BookingHistory> {
   }
 
 
-  Future<void> initiateTransaction({required String amt, required String msg}) async {
-    // nEedYM11981434076473
+  Future<void> initiateTransaction({required String paymentLink}) async {
+        if (await canLaunch(paymentLink)) {
+      await launch(paymentLink);
+    } else {
+      throw 'Could not launch $paymentLink';
+    }
 
   }
 
@@ -102,6 +107,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               String date = DateFormat('dd/MM/yyyy hh:mm a').format(dateTime);
               String status= booking['status'];
               String userId = booking['userId'];
+              String paymentLink = booking['paymentLink'];
               return Dismissible(
                 key: UniqueKey(), // Unique key for each Dismissible widget
                 direction: DismissDirection.endToStart,
@@ -296,8 +302,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                     color: Colors.white, // Set icon color to white
                                   ),
                                   onPressed: () {
-
-                                    initiateTransaction(amt: fees, msg: userId);
+                                    initiateTransaction( paymentLink: paymentLink);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary, // Set the background color to red
