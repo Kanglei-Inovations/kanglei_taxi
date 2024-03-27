@@ -35,6 +35,7 @@ class BookingProvider extends ChangeNotifier {
         'destinationPosition': GeoPoint(destinationPosition.latitude, destinationPosition.longitude),
         'date': Timestamp.fromDate(date), // Convert DateTime to Timestamp
         'status': status,
+        'paymentLink' : ""
       });
 
       notifyListeners();
