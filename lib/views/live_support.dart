@@ -256,7 +256,7 @@ class _LiveSupportState extends State<LiveSupport> {
                     borderRadius: BorderRadius.circular(Sizes.dimen_20),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: firebaseAuth.currentUser!.photoURL!,
+                    imageUrl: firebaseAuth.currentUser?.photoURL ?? 'fallback_url',
                     width: Sizes.dimen_40,
                     height: Sizes.dimen_40,
                     fit: BoxFit.contain,
