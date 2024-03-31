@@ -44,6 +44,7 @@ class _TaxiListState extends State<TaxiList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
           title: Text("Choose Taxi",
               style: TextStyle(color: Colors.black, fontSize: 18)),

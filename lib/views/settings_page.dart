@@ -210,8 +210,11 @@ class _SettingPageState extends State<SettingPage> {
                                     );
                                     // phoneNumber, you can also refresh the user to get the updated data
                                     await user.reload();
-                                    FocusScope.of(context).unfocus();
-                                    Navigator.of(context).pop(); // Close the dialog
+                                    setState(()  {
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.of(context).pop();
+                                    });
+                                  // Close the dialog
                                   },
                                   child: Text("Save"),
                                 ),

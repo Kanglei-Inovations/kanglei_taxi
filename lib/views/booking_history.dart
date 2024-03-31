@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:external_app_launcher/external_app_launcher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
@@ -271,45 +272,49 @@ class _BookingHistoryState extends State<BookingHistory> {
                             height: 10.0,
                             color: Colors.amber.shade500,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                child: ElevatedButton.icon(
-                                  label: Text(
-                                    "Print Invoice",
-                                    style: TextStyle(color: Colors.white,fontSize: 14),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.print,
-                                    size: 18.0,
-                                    color: Colors.white, // Set icon color to white
-                                  ),
-                                  onPressed: () {
-                                    _downloadTicket(type, pickupLocation, destinationLocation, distance, date, fees);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary, // Set the background color to red
-                                  ),
-                                ),
-                              ),
-                              Center(
-                                child: ElevatedButton.icon(
-                                  label: Text('Pay Now'),
-                                  icon: const Icon(
-                                    Icons.print,
-                                    size: 18.0,
-                                    color: Colors.white, // Set icon color to white
-                                  ),
-                                  onPressed: () {
-                                    initiateTransaction( paymentLink: paymentLink);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary, // Set the background color to red
+                          Visibility(
+                            visible: fees.isNotEmpty,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Center(
+                                  child: ElevatedButton.icon(
+                                    label: Text(
+                                      "Print Invoice",
+                                      style: TextStyle(color: Colors.white,fontSize: 14),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.print,
+                                      size: 18.0,
+                                      color: Colors.white, // Set icon color to white
+                                    ),
+                                    onPressed: () {
+                                      _downloadTicket(type, pickupLocation, destinationLocation, distance, date, fees);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primary, // Set the background color to red
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Center(
+                                  child: ElevatedButton.icon(
+                                    label: Text('Pay Now'),
+                                    icon: const Icon(
+                                      Icons.print,
+                                      size: 18.0,
+                                      color: Colors.white, // Set icon color to white
+                                    ),
+                                    onPressed: () {
+                                      print(paymentLink);
+                                      initiateTransaction( paymentLink: paymentLink);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primary, // Set the background color to red
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
 
 

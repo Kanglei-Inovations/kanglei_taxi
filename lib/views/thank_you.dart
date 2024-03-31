@@ -42,6 +42,7 @@ class _TankYouState extends State<TankYou> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
           title: Text("Chouse Taxi",
               style: TextStyle(color: Colors.black, fontSize: 18)),
