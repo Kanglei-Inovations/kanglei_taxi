@@ -209,9 +209,8 @@ class _SettingPageState extends State<SettingPage> {
                                       displayName: newName,
                                     );
                                     // phoneNumber, you can also refresh the user to get the updated data
-
-                                    setState(() async {
-                                      await user.reload();
+                                    await user.reload();
+                                    setState(()  {
                                       FocusScope.of(context).unfocus();
                                       Navigator.of(context).pop();
                                     });
