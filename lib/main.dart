@@ -17,13 +17,48 @@ import 'providers/auth_provider.dart';
 import 'providers/home_provider.dart';
 import 'providers/sim_provider.dart';
 import 'views/welcome_page.dart';
+import 'package:package_info/package_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String appVersion = packageInfo.version;
+  print('App version: $appVersion');
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  runApp(MyApp(prefs: prefs));
+  try {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('app_links').get();
+    if (snapshot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
+        // Access fields from the document data
+        String link = doc['link'];
+        DateTime dateTime = (doc['upload_timestamp'] as Timestamp).toDate();
+        String version = doc['version'];
+        // Process the data as needed
+        print('link: $link, DateTime: $DateTime, version No: $version');
+        if(version==appVersion ){
+          print("No Update Avilable");
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          runApp(MyApp(prefs: prefs));
+        }
+        else{
+          print("Update Avilable");
+
+        }
+      }
+
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      runApp(MyApp(prefs: prefs));
+      print('No documents found in Firestore collection "app_links"');
+    }
+  } catch (e) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    runApp(MyApp(prefs: prefs));
+    print('Error retrieving data from Firestore: $e');
+  }
+
+
 }
 
 class MyApp extends StatelessWidget {
