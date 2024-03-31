@@ -48,14 +48,14 @@ class _NavbarState extends State<Navbar> {
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
               icon: Icon(Icons.local_taxi_rounded),
-              title: Text('Ride'),
+              title: Text('Ride', style: Theme.of(context).textTheme.bodyLarge),
               activeColor: AppColors.secondary,
               inactiveColor: AppColors.primary,
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.history),
-              title: Text('History'),
+              title: Text('History', style: Theme.of(context).textTheme.bodyLarge),
               activeColor: AppColors.secondary,
               inactiveColor: AppColors.primary,
               textAlign: TextAlign.center,
@@ -65,14 +65,14 @@ class _NavbarState extends State<Navbar> {
                 label: Text('2'),
                 child: Icon(Icons.messenger_sharp),
               ),
-              title: Text('Cart'),
+              title: Text('Cart', style: Theme.of(context).textTheme.bodyLarge),
               activeColor: AppColors.secondary,
               inactiveColor: AppColors.primary,
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.settings),
-              title: Text('Settings'),
+              title: Text('Settings',style: Theme.of(context).textTheme.bodyLarge),
               activeColor: AppColors.secondary,
               inactiveColor: AppColors.primary,
               textAlign: TextAlign.center,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -119,6 +120,9 @@ class _HomePageState extends State<HomePage> {
       if (permission == LocationPermission.denied) {
         if (kDebugMode) {
           print('Location permission services are not enabled.');
+          KIinfoBar(title: "GPS Starting",
+          message: "Location permission services are not enabled.",
+          bgcolor: Colors.orange).showInfo();
         }
         await Geolocator.requestPermission();
       }
@@ -133,6 +137,9 @@ class _HomePageState extends State<HomePage> {
             _pickupAddressController.text = address;
             _isLoading =
                 false; // Set isLoading to false after obtaining the address
+            KIinfoBar(title: "GPS Started",
+                message: "Location Available",
+                bgcolor: Colors.green).showInfo();
           });
         } else {
           const KIinfoBar(
@@ -215,10 +222,14 @@ class _HomePageState extends State<HomePage> {
               height: 20,
               width: 20,
               child: Visibility(
+
                 visible: _isLoading,
+
                 child: const Center(
+
                     child: CircularProgressIndicator(
-                  backgroundColor: Colors.greenAccent,
+
+                  backgroundColor: Colors.orange,
                   color: AppColors.primary,
                 )),
               ),
@@ -342,7 +353,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 45,
+                  top: 40,
                   child: Container(
                     alignment: Alignment.center,
                     width: w - 10,
@@ -603,7 +614,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Positioned(
-                          top: 235,
+                          top: 230,
                           left: 15,
                           right: 15,
                           child: Row(
@@ -613,7 +624,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Container(
                                   padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
                                   child: const Text(
-                                    'Select Dated:',
+                                    'Departure:',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17,
@@ -715,63 +726,66 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Positioned(
-            bottom: 20,
-            left: 20,
-            right: 20,
-            child: Column(
-              children: [
-                SizedBox(
-                  // Added SizedBox to limit button width
-                  width: MediaQuery.of(context).size.width / 2,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TaxiList(
-                              type: selectedType ?? '',
-                              pickupLocation: _pickupAddressController.text,
-                              destinationLocation:
-                                  destinationAddressController.text,
-                              date: selectedDateTime,
-                              distance: _distance,
-                              currentPosition: _currentLocation,
-                              destinationPosition: _destinationLocation,
-                              fees: '',
-                              status: 'Pending'),
+          Visibility(
+            visible: destinationAddressController.text.isNotEmpty,
+            child: Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Column(
+                children: [
+                  SizedBox(
+                    // Added SizedBox to limit button width
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TaxiList(
+                                type: selectedType ?? '',
+                                pickupLocation: _pickupAddressController.text,
+                                destinationLocation:
+                                    destinationAddressController.text,
+                                date: selectedDateTime,
+                                distance: _distance,
+                                currentPosition: _currentLocation,
+                                destinationPosition: _destinationLocation,
+                                fees: '',
+                                status: 'Pending'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.burningorage,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.burningorage,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "FIND TAXI",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.local_taxi,
+                            size: 40,
+                          ),
+                        ],
                       ),
                     ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "FIND TAXI",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.local_taxi,
-                          size: 40,
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
