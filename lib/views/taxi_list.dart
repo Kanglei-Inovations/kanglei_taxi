@@ -165,7 +165,7 @@ class _TaxiListState extends State<TaxiList> {
                                 distance: widget.distance,
                                 currentPosition: widget.currentPosition,
                                 destinationPosition: widget.destinationPosition,
-                                fees: '',
+                                fees: "",
                                 status: 'Pending',
                               );
 
