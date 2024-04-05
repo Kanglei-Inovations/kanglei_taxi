@@ -77,10 +77,10 @@ class _TaxiListState extends State<TaxiList> {
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
               Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-              String carName = data['type'];
-              double pricePerKm = data['fees_per_km'];
+              String carName = data['driver_name'];
+              double pricePerKm = data['fare_fees'];
               String driverNo = data['driver_contact_no'];
-              String carPic = data['picture_url'];
+              String carPic = data['vehicle_photo'];
               String location = data['location']?? "Unknown";
               return GestureDetector(
                   onTap: () {
